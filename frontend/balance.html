@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>SAMS - Student Auditorium Management System</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/venobox/venobox.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/index.css" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="authcheck.js"></script>
+    <!-- =======================================================
+    Theme Name: TheEvent
+    Theme URL: https://bootstrapmade.com/theevent-conference-event-bootstrap-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+</head>
+
+<body>
+
+    <!--==========================
+    Header
+  ============================-->
+    <header id="header">
+    </header>
+
+    <!-- #header -->
+
+    <!--==========================
+    Intro Section
+  ============================-->
+    <section id="intro">
+        <div class="intro-container wow fadeIn">
+            <h1 class="mb-4 pb-0">Your one-stop <br><span>Entertainment</span> Manager</h1>
+            <p class="mb-4 pb-0">Kalidas Auditorium, <br><span>Indian Institute of Technology Kharagpur</span></p>
+            <!-- <a href="https://www.youtube.com/watch?v=9yOinUUiyq0" target="_blank" class="venobox play-btn mb-4" -->
+            <!-- data-vbtype="video" data-autoplay="true"></a> -->
+            <!-- <a href="#about" class="about-btn scrollto">About The Event</a> -->
+        </div>
+    </section>
+
+    <main id="main">
+
+        <div class="container">
+            <div class="section-header">
+                <h2>Balance Sheet</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Date</th>
+                                            <th>Description</th>
+                                            <th>TYPE</th>
+                                            <th>AMOUNT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablebody">
+                         
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+    </main>
+
+
+    <!--==========================
+    Footer
+  ============================-->
+    <footer id="footer">
+    </footer>
+
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/jquery/jquery-migrate.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/superfish/hoverIntent.js"></script>
+    <script src="lib/superfish/superfish.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/venobox/venobox.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Form JavaScript File -->
+    <script src="js/contactform.js"></script>
+
+
+    <!-- Template Main Javascript File -->
+    <script src="js/index.js"></script>
+    <script src="header.js"></script>
+    <script>
+        let token=localStorage.getItem('token');
+        axios.get('http://localhost:8000/transaction/', {
+            headers: {
+                "Authorization": `${token}`
+            }
+        }).then((res) => {
+            console.log(res.data);
+            let data = res.data;
+            let table = document.getElementById('tablebody');
+            for(let i=0;i<data.length;i++){
+                let row = document.createElement('tr');
+                let id = document.createElement('td');
+                let date = document.createElement('td');
+                let description = document.createElement('td');
+                let type = document.createElement('td');
+                let amount = document.createElement('td');
+                id.innerHTML = data[i].id;
+                date.innerHTML = data[i].datetime.split('T')[0];
+                description.innerHTML = data[i].desc;
+                type.innerHTML = data[i].transaction_type;
+                amount.innerHTML = data[i].amount;
+                row.appendChild(id);
+                row.appendChild(date);
+                row.appendChild(description);
+                row.appendChild(type);
+                row.appendChild(amount);
+                table.appendChild(row);
+            }
+        }).catch((err) => {
+            console.log(err);
+
+        })
+    </script>
+    <script src="footer.js"></script>
+
+</body>
+
+</html>

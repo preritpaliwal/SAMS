@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Showflix</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/venobox/venobox.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/index.css" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="authcheck.js"></script>
+    <!-- =======================================================
+    Theme Name: TheEvent
+    Theme URL: https://bootstrapmade.com/theevent-conference-event-bootstrap-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+</head>
+
+<body>
+
+    <!--==========================
+    Header
+  ============================-->
+    <header id="header">
+    </header>
+
+    <!-- #header -->
+
+    <!--==========================
+    Intro Section
+  ============================-->
+    <section id="intro">
+        <div class="intro-container wow fadeIn">
+            <h1 class="mb-4 pb-0">Your one-stop <br><span>Entertainment</span> Manager</h1>
+            <p class="mb-4 pb-0">Kalidas Auditorium, <br><span>Indian Institute of Technology Kharagpur</span></p>
+            <!-- <a href="https://www.youtube.com/watch?v=9yOinUUiyq0" target="_blank" class="venobox play-btn mb-4" -->
+                <!-- data-vbtype="video" data-autoplay="true"></a> -->
+            <!-- <a href="#about" class="about-btn scrollto">About The Event</a> -->
+        </div>
+    </section>
+
+    <main id="main">
+
+
+        <!--==========================
+      Speakers Section
+    ============================-->
+        <section id="speakers" class="wow fadeInUp">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Upcoming Events</h2>
+                </div>
+
+                <div class="row allshow justify-content-around">
+
+                </div>
+            </div>
+
+        </section>
+
+        <!--==========================
+      Buy Ticket Section
+    ============================-->
+        <section id="buy-tickets" style="display:none;" class="section-with-bg ">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="showname">Buy Tickets</h2>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-5 mb-lg-0">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted text-uppercase text-center">
+                                    Ordinary Seat
+                                </h5>
+                                <h6 class="card-price text-center" id="ordprice"></h6>
+                                <hr />
+                                <ul class="fa-ul">
+                                    <li id="ordleft">
+                                    </li>
+
+                                </ul>
+                                <hr />
+                                <div class="text-center">
+                                    <button type="button" class="btn" data-toggle="modal"
+                                        data-target="#buy-ticket-modal" data-ticket-type="standard-access"
+                                        id="ordinarybutton" data-type="ORD" onclick="ticketmodalopen(this)">
+                                        Buy Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card mb-5 mb-lg-0">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted text-uppercase text-center">
+                                    Balcony Seat
+                                </h5>
+                                <h6 class="card-price text-center" id="balprice">$250</h6>
+                                <hr />
+                                <ul class="fa-ul">
+                                    <li id="balleft">
+
+                                    </li>
+
+                                </ul>
+                                <hr />
+                                <div class="text-center">
+                                    <button type="button" class="btn" data-toggle="modal"
+                                        data-target="#buy-ticket-modal" data-ticket-type="pro-access" data-type="BAL"
+                                        id="balconybutton" onclick="ticketmodalopen(this)">
+                                        Buy Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button type="button" class="btn" onclick="back()" style="margin-top:10px;">
+                    Back
+                </button>
+
+            </div>
+
+            <!-- Modal Order Form -->
+            <div id="buy-ticket-modal" class="modal fade">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Buy Tickets</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="ticketbookform">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="name" placeholder="Your Name"
+                                        required />
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="email" placeholder="Your Email"
+                                        required />
+                                </div>
+
+                                <div class="form-group">
+                                    <select class="form-control" name="numberofseat" id="numberofseat"
+                                        onchange="priceindicator(this)" required>
+                                        <option default>Select number of seats</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="form-group " id="priceindicator">
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn" id="finalticketbuy">Buy Now</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+        </section>
+
+
+    </main>
+
+
+    <!--==========================
+    Footer
+  ============================-->
+    <footer id="footer">
+    </footer>
+
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/jquery/jquery-migrate.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/superfish/hoverIntent.js"></script>
+    <script src="lib/superfish/superfish.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/venobox/venobox.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Form JavaScript File -->
+    <script src="js/contactform.js"></script>
+
+
+    <!-- Template Main Javascript File -->
+    <script src="js/index.js"></script>
+    <script src="header.js"></script>
+    <script src="ticket.js"></script>
+    <script src="footer.js"></script>
+
+</body>
+
+</html>

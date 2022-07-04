@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Manager (SAMS)</title>
+    <link rel="stylesheet" href="css/login.css" />
+    <script src="https://kit.fontawesome.com/f784174103.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="authcheck.js"></script>
+
+</head>
+<style>
+    body {
+        display: grid;
+        place-items: center;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        background-color: #515E82;
+    }
+
+    .login-html {
+        padding-top: 20px;
+    }
+</style>
+
+<body>
+    <div class="login-wrap">
+        <div class="login-html">
+            <h1 style="text-align: center;margin-bottom: 40px;color: white">Sign In</h1>
+
+            <div class="login-form" style="margin-top: 20px;">
+                <form id="loginform">
+                    <div class="group">
+                        <label for="user" class="label">Type</label>
+                        <select class="input" id="typeoflogin">
+                            <option value="sales">Sales Person</option>
+                            <option value="manager">Manager</option>
+                            <option value="clerk">Clerk</option>
+                        </select>
+                    </div>
+                    <div class="group">
+                        <label for="user" class="label">Username</label>
+                        <input id="user" type="text" class="input" required>
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Password</label>
+                        <input id="pass" type="password" class="input" data-type="password" required>
+                    </div>
+                    <div class="group">
+                        <input type="submit" class="button" value="Sign In">
+                    </div>
+                </form>
+                <div class="hr"></div></div>
+                <p align="right"><button class="backbutt"><a href='index.html'>BACK</a></button>
+                </p>
+        
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let username = document.querySelector('input#user').value;
+        let password = document.querySelector('input#pass').value;
+        let type = document.querySelector('select#typeoflogin').value;
+
+        console.log(username, password, type);
+        let url = 'http://localhost:8000/login/'
+        let data = {
+            username,
+            password,
+            type
+        };
+
+        axios.post(url, data).then(res => {
+            console.log(res.data.user)
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('user', JSON.stringify(res.data.user));
+            window.open('index.html', '_self');
+            alert('logged in successfully');
+        }).catch(err => {
+            console.log(err);
+            alert(err?.response?.data?.message);
+        });
+
+
+
+    })
+</script>
+
+</html>

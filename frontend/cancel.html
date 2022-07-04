@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>SAMS - Student Auditorium Management System</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/venobox/venobox.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/index.css" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="authcheck.js"></script>
+    <!-- =======================================================
+    Theme Name: TheEvent
+    Theme URL: https://bootstrapmade.com/theevent-conference-event-bootstrap-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+</head>
+
+<body>
+
+    <!--==========================
+    Header
+  ============================-->
+    <header id="header">
+    </header>
+
+    <!-- #header -->
+
+    <!--==========================
+    Intro Section
+  ============================-->
+  <section id="intro">
+    <div class="intro-container wow fadeIn">
+        <h1 class="mb-4 pb-0">Your one-stop <br><span>Entertainment</span> Manager</h1>
+        <p class="mb-4 pb-0">Kalidas Auditorium, <br><span>Indian Institute of Technology Kharagpur</span></p>
+        <!-- <a href="https://www.youtube.com/watch?v=9yOinUUiyq0" target="_blank" class="venobox play-btn mb-4" -->
+            <!-- data-vbtype="video" data-autoplay="true"></a> -->
+        <!-- <a href="#about" class="about-btn scrollto">About The Event</a> -->
+    </div>
+</section>
+
+    <main id="main">
+
+
+        <!--==========================
+      Speakers Section
+    ============================-->
+        <section id="speakers" class="wow fadeInUp">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Cancel Ticket</h2>
+                    <p>Enter the required information</p>
+                </div>
+                <form id="cancelticketform">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="showname" placeholder="Show Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="Your Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" placeholder="Your Email" required />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="seat" placeholder="Seat Number to Cancel"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <select name="type" class="form-control" required>
+                            <option value="">Select Ticket Type</option>
+                            <option value="ORD">ordinary seat</option>
+                            <option value="BAL">balcony seat</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn" id="finalticketbuy">Cancel Ticket</button>
+                    </div>
+                </form>
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!--==========================
+    Footer
+  ============================-->
+    <footer id="footer">
+    </footer>
+
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/jquery/jquery-migrate.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/superfish/hoverIntent.js"></script>
+    <script src="lib/superfish/superfish.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/venobox/venobox.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Form JavaScript File -->
+    <script src="js/contactform.js"></script>
+
+
+    <!-- Template Main Javascript File -->
+    <script src="js/index.js"></script>
+    <script src="header.js"></script>
+    <script>
+        window.jsPDF = window.jspdf.jsPDF
+
+        let formname = document.getElementById('cancelticketform')
+        cancelticketform.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let formdata = new FormData(cancelticketform);
+            formdata.append('type', localStorage.getItem('type'));
+            formdata.append('show', localStorage.getItem('showid'));
+            formdata.append('token', localStorage.getItem('token'));
+            console.log(formdata);
+            let url = 'http://localhost:8000/cancelticket/';
+            axios.delete(url, {
+                data: formdata
+            }).then(res => {
+                console.log(res.data);
+                alert('ticket cancelled successfully, download for confirmation');
+                const doc = new jsPDF({
+                    orientation: "landscape",
+                    unit: "in",
+                    format: [8, 5]
+                });
+                doc.setFontSize(20);
+                doc.text('cancelled Ticket', 3, 0.5);
+                doc.text(`name: ${formdata.getAll('name')[0]}`, 1, 1)
+                doc.text(`email: ${formdata.getAll('email')[0]}`, 1, 1.5);
+                doc.text(`price: ${res.data.price}`, 1, 2);
+                doc.text(`Amount to be Returned: ${res.data.amount_to_return}`, 1, 2.5);
+        
+                doc.save("Cancel ticket.pdf");
+                cancelticketform.reset();
+
+
+            }).catch(err => {
+                console.log(err);
+                alert(err?.response?.data?.message);
+                cancelticketform.reset();
+            })
+
+
+
+
+        });
+    </script>
+    <script src="footer.js"></script>
+
+</body>
+
+</html>

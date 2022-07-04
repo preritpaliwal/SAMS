@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>SAMS - Student Auditorium Management System</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/venobox/venobox.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/index.css" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="authcheck.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <!--==========================
+    Header
+  ============================-->
+    <header id="header">
+    </header>
+
+    <!-- #header -->
+
+    <!--==========================
+    Intro Section
+  ============================-->
+    <section id="intro">
+        <div class="intro-container wow fadeIn">
+            <h1 class="mb-4 pb-0">Your one-stop <br><span>Entertainment</span> Manager</h1>
+            <p class="mb-4 pb-0">Kalidas Auditorium, <br><span>Indian Institute of Technology Kharagpur</span></p>
+            <!-- <a href="https://www.youtube.com/watch?v=9yOinUUiyq0" target="_blank" class="venobox play-btn mb-4" -->
+            <!-- data-vbtype="video" data-autoplay="true"></a> -->
+            <!-- <a href="#about" class="about-btn scrollto">About The Event</a> -->
+        </div>
+    </section>
+    <main id="main">
+        <section id="clerk">
+            <div class="container mt-5 mb-5">
+                <div class="section-header">
+                    <h2>Add Expenditure</h2>
+                    <p>Enter Information about Expenditure</p>
+                </div>
+                <form id="expenditureform">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="showname" placeholder="Show Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="desc" placeholder="Description" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="amount" placeholder="Amount" required />
+                    </div>
+                    <div class="form-group">
+                        <select name="transaction_type" class="form-control">
+                            <option value="debit">Debit</option>
+                            <option value="credit">Credit</option>
+                        </select>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn" id="finalticketbuy">Add Expenditure</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section id="manager">
+            <div class="container mt-5">
+                <div class="section-header">
+                    <h2>Create Show</h2>
+                    <p>Enter the information</p>
+                </div>
+                <form id="showcreateform">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="Show Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="desc" placeholder="Description" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdaytime">Start time </label>
+                        <input class="form-control" type="datetime-local" id="birthdaytime" name="start_time">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthdaytime">End time </label>
+                        <input class="form-control" type="datetime-local" id="birthdaytime" name="end_time">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="total_ord" placeholder="Total Ordinary Seat"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="total_bal" placeholder="Total Balcony Seat"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="price_ord" placeholder="Price of Ordinary Seat"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="price_bal" placeholder="Price Balcony Seat"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="available_ord"
+                            placeholder="Available Ordinary Seat" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="available_bal"
+                            placeholder="Available Balcony Seat" required />
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn" id="finalticketbuy">Create Show</button>
+                    </div>
+                </form>
+
+
+
+
+
+
+
+            </div>
+
+            <div class="container mt-5 mb-5">
+                <div class="section-header">
+                    <h2>Add Salesperson</h2>
+                    <p>Enter Information About Salesperson</p>
+                </div>
+                <form id="createsalesperson">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="first_name" placeholder="First Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="last_name" placeholder="Last Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="username" placeholder="Username" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" class="form-control"
+                            name="password"
+                            placeholder="Enter Password (password must contain atleast 8 char and one uppercase,lowercase and number)"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="percent_commission"
+                            placeholder="Percentage Commission per Ticket" required />
+                    </div>
+
+
+                    <div class="text-center">
+                        <button type="submit" class="btn" id="finalticketbuy">Add Salesperson</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section id="sales">
+            <div class="container mt-5 mb-5">
+                <div class="section-header">
+                    <h2>Total Sales Information</h2>
+                </div>
+                <p id="commission_percent"></p>
+                <p id="totalticket"></p>
+                <p id="totalcommission"></p>
+                <p id="totalamount"></p>
+            </div>
+
+
+
+        </section>
+    </main>
+
+
+
+
+    <!--==========================
+    Footer
+  ============================-->
+    <footer id="footer">
+    </footer>
+
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/jquery/jquery-migrate.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/superfish/hoverIntent.js"></script>
+    <script src="lib/superfish/superfish.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/venobox/venobox.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Form JavaScript File -->
+    <script src="js/contactform.js"></script>
+
+
+    <!-- Template Main Javascript File -->
+    <script src="js/index.js"></script>
+    <script src="header.js"></script>
+    <script src="footer.js"></script>
+    <script src="information.js"></script>
+</body>
+
+</html>
